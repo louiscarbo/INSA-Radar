@@ -9,20 +9,29 @@
 /* Begin PBXBuildFile section */
 		7BB5456E2B64037000BDA5EC /* INSA_RadarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB5456D2B64037000BDA5EC /* INSA_RadarApp.swift */; };
 		7BB545702B64037000BDA5EC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB5456F2B64037000BDA5EC /* ContentView.swift */; };
-		7BB545722B64037000BDA5EC /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB545712B64037000BDA5EC /* Item.swift */; };
 		7BB545742B64037200BDA5EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7BB545732B64037200BDA5EC /* Assets.xcassets */; };
 		7BB545772B64037200BDA5EC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7BB545762B64037200BDA5EC /* Preview Assets.xcassets */; };
+		7BB545812B6403A500BDA5EC /* CalendarUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB545802B6403A500BDA5EC /* CalendarUtilities.swift */; };
+		7BB545852B64056B00BDA5EC /* iCalendarParser in Frameworks */ = {isa = PBXBuildFile; productRef = 7BB545842B64056B00BDA5EC /* iCalendarParser */; };
+		7BB545872B640BD900BDA5EC /* GeneralUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB545862B640BD900BDA5EC /* GeneralUtilities.swift */; };
+		7BB5458C2B6410C900BDA5EC /* Salle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB5458B2B6410C900BDA5EC /* Salle.swift */; };
+		7BB5458E2B6410E600BDA5EC /* Evenement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB5458D2B6410E600BDA5EC /* Evenement.swift */; };
+		7BB545912B64146500BDA5EC /* Requete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB545902B64146500BDA5EC /* Requete.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		7BB5456A2B64037000BDA5EC /* INSA Radar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "INSA Radar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BB5456D2B64037000BDA5EC /* INSA_RadarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INSA_RadarApp.swift; sourceTree = "<group>"; };
 		7BB5456F2B64037000BDA5EC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		7BB545712B64037000BDA5EC /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		7BB545732B64037200BDA5EC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7BB545762B64037200BDA5EC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7BB545782B64037200BDA5EC /* INSA_Radar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = INSA_Radar.entitlements; sourceTree = "<group>"; };
 		7BB545792B64037200BDA5EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7BB545802B6403A500BDA5EC /* CalendarUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarUtilities.swift; sourceTree = "<group>"; };
+		7BB545862B640BD900BDA5EC /* GeneralUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralUtilities.swift; sourceTree = "<group>"; };
+		7BB5458B2B6410C900BDA5EC /* Salle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Salle.swift; sourceTree = "<group>"; };
+		7BB5458D2B6410E600BDA5EC /* Evenement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Evenement.swift; sourceTree = "<group>"; };
+		7BB545902B64146500BDA5EC /* Requete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Requete.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -30,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BB545852B64056B00BDA5EC /* iCalendarParser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,8 +66,9 @@
 			isa = PBXGroup;
 			children = (
 				7BB5456D2B64037000BDA5EC /* INSA_RadarApp.swift */,
-				7BB5456F2B64037000BDA5EC /* ContentView.swift */,
-				7BB545712B64037000BDA5EC /* Item.swift */,
+				7BB5458F2B6410EB00BDA5EC /* Models */,
+				7BB545882B6410A500BDA5EC /* Utilities */,
+				7BB5457F2B64039300BDA5EC /* Views */,
 				7BB545732B64037200BDA5EC /* Assets.xcassets */,
 				7BB545782B64037200BDA5EC /* INSA_Radar.entitlements */,
 				7BB545792B64037200BDA5EC /* Info.plist */,
@@ -72,6 +83,33 @@
 				7BB545762B64037200BDA5EC /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		7BB5457F2B64039300BDA5EC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7BB5456F2B64037000BDA5EC /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7BB545882B6410A500BDA5EC /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				7BB545802B6403A500BDA5EC /* CalendarUtilities.swift */,
+				7BB545862B640BD900BDA5EC /* GeneralUtilities.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		7BB5458F2B6410EB00BDA5EC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7BB5458B2B6410C900BDA5EC /* Salle.swift */,
+				7BB5458D2B6410E600BDA5EC /* Evenement.swift */,
+				7BB545902B64146500BDA5EC /* Requete.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -90,6 +128,9 @@
 			dependencies = (
 			);
 			name = "INSA Radar";
+			packageProductDependencies = (
+				7BB545842B64056B00BDA5EC /* iCalendarParser */,
+			);
 			productName = "INSA Radar";
 			productReference = 7BB5456A2B64037000BDA5EC /* INSA Radar.app */;
 			productType = "com.apple.product-type.application";
@@ -118,6 +159,9 @@
 				Base,
 			);
 			mainGroup = 7BB545612B64037000BDA5EC;
+			packageReferences = (
+				7BB545832B64056B00BDA5EC /* XCRemoteSwiftPackageReference "iCalendarParser" */,
+			);
 			productRefGroup = 7BB5456B2B64037000BDA5EC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -144,9 +188,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BB545812B6403A500BDA5EC /* CalendarUtilities.swift in Sources */,
+				7BB545872B640BD900BDA5EC /* GeneralUtilities.swift in Sources */,
 				7BB545702B64037000BDA5EC /* ContentView.swift in Sources */,
-				7BB545722B64037000BDA5EC /* Item.swift in Sources */,
+				7BB5458E2B6410E600BDA5EC /* Evenement.swift in Sources */,
+				7BB545912B64146500BDA5EC /* Requete.swift in Sources */,
 				7BB5456E2B64037000BDA5EC /* INSA_RadarApp.swift in Sources */,
+				7BB5458C2B6410C900BDA5EC /* Salle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,6 +404,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7BB545832B64056B00BDA5EC /* XCRemoteSwiftPackageReference "iCalendarParser" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dmail-me/iCalendarParser.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7BB545842B64056B00BDA5EC /* iCalendarParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BB545832B64056B00BDA5EC /* XCRemoteSwiftPackageReference "iCalendarParser" */;
+			productName = iCalendarParser;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7BB545622B64037000BDA5EC /* Project object */;
 }

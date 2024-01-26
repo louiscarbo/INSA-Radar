@@ -6,3 +6,12 @@
 //
 
 import Foundation
+import SwiftData
+
+@Model
+final class Requete {
+    var date: Date = Date()
+    var salles: [Salle]? = []
+    
+    init() {}
+}
