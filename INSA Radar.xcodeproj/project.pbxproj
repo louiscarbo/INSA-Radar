@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7B49BFB52B658839008558C0 /* Evenement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B49BFB42B658839008558C0 /* Evenement.swift */; };
 		7BB5456E2B64037000BDA5EC /* INSA_RadarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB5456D2B64037000BDA5EC /* INSA_RadarApp.swift */; };
 		7BB545702B64037000BDA5EC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB5456F2B64037000BDA5EC /* ContentView.swift */; };
 		7BB545742B64037200BDA5EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7BB545732B64037200BDA5EC /* Assets.xcassets */; };
@@ -15,11 +16,11 @@
 		7BB545852B64056B00BDA5EC /* iCalendarParser in Frameworks */ = {isa = PBXBuildFile; productRef = 7BB545842B64056B00BDA5EC /* iCalendarParser */; };
 		7BB545872B640BD900BDA5EC /* GeneralUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB545862B640BD900BDA5EC /* GeneralUtilities.swift */; };
 		7BB5458C2B6410C900BDA5EC /* Salle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB5458B2B6410C900BDA5EC /* Salle.swift */; };
-		7BB5458E2B6410E600BDA5EC /* Evenement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB5458D2B6410E600BDA5EC /* Evenement.swift */; };
 		7BB545912B64146500BDA5EC /* Requete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB545902B64146500BDA5EC /* Requete.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7B49BFB42B658839008558C0 /* Evenement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Evenement.swift; sourceTree = "<group>"; };
 		7BB5456A2B64037000BDA5EC /* INSA Radar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "INSA Radar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BB5456D2B64037000BDA5EC /* INSA_RadarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INSA_RadarApp.swift; sourceTree = "<group>"; };
 		7BB5456F2B64037000BDA5EC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -30,7 +31,6 @@
 		7BB545802B6403A500BDA5EC /* CalendarUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarUtilities.swift; sourceTree = "<group>"; };
 		7BB545862B640BD900BDA5EC /* GeneralUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralUtilities.swift; sourceTree = "<group>"; };
 		7BB5458B2B6410C900BDA5EC /* Salle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Salle.swift; sourceTree = "<group>"; };
-		7BB5458D2B6410E600BDA5EC /* Evenement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Evenement.swift; sourceTree = "<group>"; };
 		7BB545902B64146500BDA5EC /* Requete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Requete.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -106,7 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				7BB5458B2B6410C900BDA5EC /* Salle.swift */,
-				7BB5458D2B6410E600BDA5EC /* Evenement.swift */,
+				7B49BFB42B658839008558C0 /* Evenement.swift */,
 				7BB545902B64146500BDA5EC /* Requete.swift */,
 			);
 			path = Models;
@@ -191,9 +191,9 @@
 				7BB545812B6403A500BDA5EC /* CalendarUtilities.swift in Sources */,
 				7BB545872B640BD900BDA5EC /* GeneralUtilities.swift in Sources */,
 				7BB545702B64037000BDA5EC /* ContentView.swift in Sources */,
-				7BB5458E2B6410E600BDA5EC /* Evenement.swift in Sources */,
 				7BB545912B64146500BDA5EC /* Requete.swift in Sources */,
 				7BB5456E2B64037000BDA5EC /* INSA_RadarApp.swift in Sources */,
+				7B49BFB52B658839008558C0 /* Evenement.swift in Sources */,
 				7BB5458C2B6410C900BDA5EC /* Salle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

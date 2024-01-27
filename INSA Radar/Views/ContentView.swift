@@ -6,23 +6,29 @@
 //
 
 import SwiftUI
-import SwiftData
 import iCalendarParser
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Requete]
+    @State private var salles: [Salle] = []
     
-    @State private var iCalendar: ICalendar?
     @State private var buffering = false
 
     var body: some View {
         VStack {
-            Button("Fetch Data") {
-                Task {
-                    buffering = true
-                    iCalendar = await getCalendarFromURL(urlString: "https://apps-int.insa-strasbourg.fr/ade/export.php?projectId=30&resources=5987")
-                    buffering = false
+            HStack {
+                Button("Fetch Data BATC1") {
+                    Task {
+                        buffering = true
+                        salles = try await getSallesAndEvents(from: "https://apps-int.insa-strasbourg.fr/ade/export.php?projectId=30&resources=5987")
+                        buffering = false
+                    }
+                }
+                Button("Fetch Data TOUSBATS") {
+                    Task {
+                        buffering = true
+                        salles = try await getSallesAndEvents(from: "https://apps-int.insa-strasbourg.fr/ade/export.php?projectId=30&resources=5982,5987,5985,5988,5989,4360,5992,5990")
+                        buffering = false
+                    }
                 }
             }
             if buffering {
@@ -30,12 +36,8 @@ struct ContentView: View {
                 Spacer()
             } else {
                 List {
-                    if let iCalendar = iCalendar {
-                        ForEach(iCalendar.events, id:\.uid) { event in
-                            if let location = event.location {
-                                Text(location)
-                            }
-                        }
+                    ForEach(salles, id: \.identifier) { salle in
+                        Text(salle.nom + " - \(salle.evenements.count) events")
                     }
                 }
             }
@@ -45,5 +47,4 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: Requete.self)
 }

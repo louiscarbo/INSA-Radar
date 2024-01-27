@@ -6,22 +6,20 @@
 //
 
 import Foundation
-import SwiftData
+import iCalendarParser
 
-@Model
-final class Salle {
+final class Salle: Observable {
+    var identifier = UUID()
     var nom: String = ""
     var requete: Requete?
-    var evenements: [Evenement]? = []
+    var evenements: [Evenement] = []
     
-    init(nom: String) {
+    init(requete: Requete, nom: String) {
+        self.requete = requete
         self.nom = nom
     }
     
-    func isFreeAtDate(date: Date) -> Bool {
-        if let evenements = evenements {
-            return evenements.allSatisfy { !$0.isHappeningAtDate(date: date) }
-        }
-        return false
+    init(nom: String) {
+        self.nom = nom
     }
 }
