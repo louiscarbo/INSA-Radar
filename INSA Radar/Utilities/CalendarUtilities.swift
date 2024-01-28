@@ -22,48 +22,6 @@ private func getCalendarFromURL(from urlString: String) async throws -> ICalenda
     return nil
 }
 
-func getNomsSallesFromICalendar(calendar: ICalendar) async throws -> [String] {
-    var nomsSalles: [String] = []
-    
-    for event in calendar.events {
-        for nomSalle in getNomsSallesFromICEvent(iCalEvent: event) {
-            nomsSalles.append(nomSalle)
-        }
-    }
-    
-    return Array(Set(nomsSalles)).sorted(by: {$0 <= $1})
-}
-
-func getSallesAndEvents(from urlString: String) async throws -> [Salle] {
-    
-    if let calendar = try await getCalendarFromURL(from: urlString) {
-        let nomSalles = try await getNomsSallesFromICalendar(calendar: calendar)
-        
-        var salles: [Salle] = []
-        
-        for nomSalle in nomSalles {
-            let newSalle = Salle(nom: nomSalle)
-            salles.append(newSalle)
-            
-            for event in calendar.events {
-                for nomSalleEvent in getNomsSallesFromICEvent(iCalEvent: event) {
-                    if nomSalleEvent == nomSalle {
-                        let newEvenement = Evenement()
-                        newEvenement.startDate = event.dtStart?.date
-                        newEvenement.endDate = event.dtEnd?.date
-                        
-                        newSalle.evenements.append(newEvenement)
-                    }
-                }
-            }
-        }
-        return salles
-
-    }
-    
-    return []
-}
-
 private func getNomsSallesFromICEvent(iCalEvent: ICEvent) -> [String] {
     var nomsSalles: [String] = []
     
@@ -91,4 +49,38 @@ private func getSallesStringsFromLocation(in sourceString: String) -> [String] {
         print("Error creating regex: \(error)")
         return []
     }
+}
+
+func getSalles(from urlString: String) async throws -> [Salle] {
+    var salles: [Salle] = []
+    
+    // Récupère le calendrier depuis l'URL fourni
+    if let calendar = try await getCalendarFromURL(from: urlString) {
+        var dictionary: [String:[Evenement]] = [:]
+        
+        for event in calendar.events {
+            let nomsSalles = getNomsSallesFromICEvent(iCalEvent: event)
+            
+            // Ajoute l'événement en question à chaque salle
+            for nomSalle in nomsSalles {
+                var newEvents: [Evenement]
+                if let currentEvents: [Evenement] = dictionary[nomSalle] {
+                    newEvents = currentEvents
+                                        
+                    newEvents.append(Evenement(icEvent: event))
+                } else {
+                    newEvents = [Evenement(icEvent: event)]
+                }
+                dictionary.updateValue(newEvents, forKey: nomSalle)
+            }
+        }
+        
+        for nomSalle in dictionary.keys {
+            let newSalle = Salle(nom: nomSalle)
+            newSalle.evenements = dictionary[nomSalle] ?? []
+            salles.append(newSalle)
+        }
+    }
+    
+    return salles.sorted(by: {$0.nom <= $1.nom})
 }
