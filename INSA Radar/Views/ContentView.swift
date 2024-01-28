@@ -37,7 +37,7 @@ struct ContentView: View {
                     if availableSalles.count > 0 {
                         Section("Salles disponibles") {
                             ForEach(availableSalles, id: \.identifier) { salle in
-                                AvailableSalleView(date: date, salle: salle)
+                                AvailableSalleView(date: $date, salle: salle)
                             }
                         }
                     }
@@ -97,32 +97,30 @@ struct ContentView: View {
 }
 
 struct AvailableSalleView: View {
-    @State var date: Date
+    @Binding var date: Date
     @State var salle: Salle
     
     var body: some View {
-        let nextUnavailableTime: String? = salle.nextUnavailableTime(after: date)?.formatted(date: .omitted, time: .standard)
-        if let nextUnavailableTime = nextUnavailableTime {
-            Text(salle.nom + " - disponible jusqu'à " +  nextUnavailableTime)
+        if let nextUnavailableTime: Date = salle.nextUnavailableTime(after: date) {
+            if isSameDay(date1: date, date2: nextUnavailableTime) {
+                let nextUnavailableDateString = nextUnavailableTime.formatted(date: .omitted, time: .shortened)
+                Text(salle.nom + " - Disponible jusqu'à " + nextUnavailableDateString)
+            } else {
+                Text(salle.nom + " - Disponible toute la journée")
+            }
         } else {
-            Text(salle.nom + " - disponible")
+            Text(salle.nom + " - Disponible")
         }
     }
 }
 
-func testDate() -> Date? {
+func isSameDay(date1: Date, date2: Date) -> Bool {
     let calendar = Calendar.current
-    var dateComponents = DateComponents()
-    dateComponents.year = 2024 // or any year you want
-    dateComponents.month = 1 // January
-    dateComponents.day = 30 // 29th
-    dateComponents.hour = 11 // 9 AM
-    dateComponents.minute = 0
+    let components1 = calendar.dateComponents([.month, .day], from: date1)
+    let components2 = calendar.dateComponents([.month, .day], from: date2)
 
-    if let date = calendar.date(from: dateComponents) {
-        return date
-    }
-    return nil
+    return components1.month == components2.month &&
+           components1.day == components2.day
 }
 
 #Preview {

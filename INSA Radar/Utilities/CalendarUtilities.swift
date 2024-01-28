@@ -52,6 +52,14 @@ private func getSallesStringsFromLocation(in sourceString: String) -> [String] {
 }
 
 func getSalles(from urlString: String) async throws -> [Salle] {
+    let sallesExclues = [
+        "C0.04",
+        "C1.14",
+        "C2.18",
+        "C2.27",
+        "D2.02"
+    ]
+    
     var salles: [Salle] = []
     
     // Récupère le calendrier depuis l'URL fourni
@@ -76,9 +84,11 @@ func getSalles(from urlString: String) async throws -> [Salle] {
         }
         
         for nomSalle in dictionary.keys {
-            let newSalle = Salle(nom: nomSalle)
-            newSalle.evenements = dictionary[nomSalle] ?? []
-            salles.append(newSalle)
+            if !sallesExclues.contains(nomSalle) {
+                let newSalle = Salle(nom: nomSalle)
+                newSalle.evenements = dictionary[nomSalle] ?? []
+                salles.append(newSalle)
+            }
         }
     }
     

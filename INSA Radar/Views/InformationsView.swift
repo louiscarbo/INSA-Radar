@@ -17,17 +17,17 @@ struct InformationsView: View {
                     Text("Comment fonctionne INSA Radar ?")
                         .font(.title2)
                         .bold()
-                    Text("INSA Radar récupère les informations sur les salles disponibles depuis l'emploi du temps de l'INSA, à partir d'un lien de synchronisation similaire à celui que vous utilisez pour synchroniser votre emploi du temps à votre calendrier.")
+                    Text("**INSA Radar récupère les informations sur les salles disponibles depuis l'emploi du temps** de l'INSA, à partir d'un lien de synchronisation similaire à celui que vous utilisez pour synchroniser votre emploi du temps à votre calendrier.")
                         .padding(.bottom)
-                    Text("À l'ouverture d'INSA Radar, l'application doit télécharger et traiter les événements du calendrier de l'INSA. Cela explique les quelques secondes d'attente au début.")
+                    Text("À l'ouverture d'INSA Radar, l'application doit télécharger et traiter les événements du calendrier de l'INSA. Cela explique les quelques secondes d'attente au début. Je travaille actuellement à réduire le délai d'ouverture de l'application.")
                         .padding(.bottom)
                     
                     Text("Comment signaler un bug, envoyer une suggestion, une remarque ?")
                         .font(.title2)
                         .bold()
-                    Text("N'hésitez pas à me contacteer, Louis CARBO ESTAQUE (GE2), par exemple par mail :")
+                    Text("Si vous souhaitez signaler un bug, envoyer une suggestion, une remarque, proposer d'exclure une salle qui n'est pas pertinente pour l'application... N'hésitez pas à me contacteer, Louis CARBO ESTAQUE (GE2), par exemple par mail :")
                     Button {
-                        let mailTo = String(localized: "mailto:TrenteVingt@carbo-estaque.fr?subject=TrenteVingt Feedback").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+                        let mailTo = String(localized: "mailto:louis.carbo_estaque@insa-strasbourg.fr?subject=INSA Radar").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
                         let mailToUrl = URL(string: mailTo!)!
                         if UIApplication.shared.canOpenURL(mailToUrl) {
                             UIApplication.shared.open(mailToUrl, options: [:])
