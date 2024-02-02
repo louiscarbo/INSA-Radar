@@ -50,4 +50,14 @@ final class Salle: Observable {
         }
         return nil
     }
+    
+    func nextAvailableTime(after date: Date) -> Date? {
+        let sortedEvents = evenements.sorted { $0.endDate ?? Date.distantPast < $1.endDate ?? Date.distantPast }
+        for evenement in sortedEvents {
+            if let eventEndDate = evenement.endDate, eventEndDate > date {
+                return eventEndDate
+            }
+        }
+        return nil
+    }
 }

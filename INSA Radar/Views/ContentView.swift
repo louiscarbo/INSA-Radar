@@ -44,7 +44,7 @@ struct ContentView: View {
                     if notAvailableSalles.count > 0 {
                         Section("Salles non disponibles") {
                             ForEach(notAvailableSalles, id: \.identifier) { salle in
-                                Text(salle.nom + " - \(salle.evenements.count) events")
+                                UnavailableSalleView(date:  $date, salle: salle)
                             }
                         }
                     }
@@ -110,6 +110,24 @@ struct AvailableSalleView: View {
             }
         } else {
             Text(salle.nom + " - Disponible")
+        }
+    }
+}
+
+struct UnavailableSalleView: View {
+    @Binding var date: Date
+    @State var salle: Salle
+    
+    var body: some View {
+        if let nextAvailableDate: Date = salle.nextAvailableTime(after: date) {
+            if isSameDay(date1: date, date2: nextAvailableDate) {
+                let nextAvailableDateString = nextAvailableDate.formatted(date: .omitted, time: .shortened)
+                Text(salle.nom + " - Indisponible jusqu'à " + nextAvailableDateString)
+            } else {
+                Text(salle.nom + " - Indisponible toute la journée")
+            }
+        } else {
+            Text(salle.nom + " - Indisponible")
         }
     }
 }
