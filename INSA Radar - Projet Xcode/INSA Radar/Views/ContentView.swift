@@ -9,23 +9,46 @@ import SwiftUI
 import iCalendarParser
 
 struct ContentView: View {
+    var updateOnOpen = true
+    
     @State private var salles: [Salle] = []
-    @State private var availableSalles: [Salle] = []
-    @State private var notAvailableSalles: [Salle] = []
+    private var availableSalles: [Salle] {
+        let salles = salles.filter({$0.isAvailable(on: date)})
+        return filterBatimentEtage(salles: salles)
+    }
+    
+    private var notAvailableSalles: [Salle] {
+        let salles = salles.filter({!$0.isAvailable(on: date)})
+        return filterBatimentEtage(salles: salles)
+    }
     
     @State private var date: Date = Date()
     @State private var showInformations = false
     
     @State private var buffering = false
+    
+    @State private var batimentsToShow: [String:Bool] = [
+        "C": true,
+        "E": true,
+        "F": true
+    ]
+    
+    @State private var etagesToShow: [Int:Bool] = [
+        0: true,
+        1: true,
+        2: true,
+        3: true,
+        4: true
+    ]
 
     var body: some View {
         NavigationStack {
             List {
                 Section {
                     DatePicker("Voir les salles disponibles le", selection: $date)
-                        .onChange(of: date) {
-                            refreshDate()
-                        }
+                    Button("Maintenant") {
+                        date = Date()
+                    }
                 }
                 if buffering {
                     HStack {
@@ -49,7 +72,14 @@ struct ContentView: View {
                         }
                     }
                     if availableSalles.count == 0 && notAvailableSalles.count == 0 {
-                        Text("Rafraîchissez l'application à l'aide du bouton en haut de l'écran.")
+                        if salles.count == 0 {
+                            Text("Rafraîchissez l'application à l'aide du bouton en haut de l'écran.")
+                        } else {
+                            ContentUnavailableView(
+                                "Aucune salle trouvée",
+                                systemImage: "magnifyingglass",
+                                description: Text("Modifiez vos filtres pour trouver une salle libre."))
+                        }
                     }
                 }
             }
@@ -72,12 +102,29 @@ struct ContentView: View {
                         InformationsView()
                     }
                 }
+                ToolbarItem {
+                    Menu("Filtrer", systemImage: "slider.vertical.3") {
+                        Text("Filtrer par")
+                        Menu("Bâtiment") {
+                            ForEach(["C", "E", "F"], id: \.self) { batiment in
+                                ToggleBatiment(batiment: batiment, batimentsToShow: $batimentsToShow)
+                            }
+                        }
+                        Menu("Étage") {
+                            ForEach(0...4, id: \.self) { etage in
+                                ToggleEtage(etage: etage, etagesToShow: $etagesToShow)
+                            }
+                        }
+                    }
+                }
             }
             .navigationTitle("INSA Radar")
         }
         .onAppear {
-            refresh()
-            date = Date()
+            if updateOnOpen {
+                refresh()
+                date = Date()
+            }
         }
     }
     
@@ -85,14 +132,44 @@ struct ContentView: View {
         Task {
             withAnimation { buffering = true }
             salles = try await getSalles(from: "https://apps-int.insa-strasbourg.fr/ade/export.php?projectId=30&resources=5982,5987,5985,5988,5989,4360,5992,5990")
-            refreshDate()
             withAnimation { buffering = false }
         }
     }
     
-    func refreshDate() {
-        availableSalles = salles.filter({$0.isAvailable(on: date)})
-        notAvailableSalles = salles.filter({!$0.isAvailable(on: date)})
+    func filterBatimentEtage(salles: [Salle]) -> [Salle] {
+        let salles = salles.filter({ salle in
+            guard let batiment = salle.nom.first.map(String.init) else { return false }
+            return batimentsToShow[batiment] ?? false
+        })
+        return salles.filter({ salle in
+            let etageString = String(salle.nom[salle.nom.index(salle.nom.startIndex, offsetBy: 1)])
+            guard let etage = Int(etageString) else { return false }
+            return etagesToShow[etage] ?? false
+        })
+    }
+}
+
+struct ToggleBatiment: View {
+    @State var batiment: String
+    @Binding var batimentsToShow: [String:Bool]
+    
+    var body: some View {
+        Toggle(batiment, isOn:  Binding(
+            get: { batimentsToShow[batiment] ?? false },
+            set: { batimentsToShow[batiment] = $0 }
+        ))
+    }
+}
+
+struct ToggleEtage: View {
+    @State var etage: Int
+    @Binding var etagesToShow: [Int:Bool]
+    
+    var body: some View {
+        Toggle(String(etage), isOn:  Binding(
+            get: { etagesToShow[etage] ?? false },
+            set: { etagesToShow[etage] = $0 }
+        ))
     }
 }
 
@@ -142,5 +219,5 @@ func isSameDay(date1: Date, date2: Date) -> Bool {
 }
 
 #Preview {
-    ContentView()
+    ContentView(updateOnOpen: false)
 }
