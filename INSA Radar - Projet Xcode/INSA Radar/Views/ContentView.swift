@@ -45,7 +45,7 @@ struct ContentView: View {
         NavigationStack {
             List {
                 Section {
-                    DatePicker("Voir les salles disponibles le", selection: $date)
+                    DatePicker("Voir les salles disponibles le", selection: $date, in: Date().addingTimeInterval(-7*24*3600.0)...Date().addingTimeInterval(7*24*3600) )
                     Button("Maintenant") {
                         date = Date()
                     }
