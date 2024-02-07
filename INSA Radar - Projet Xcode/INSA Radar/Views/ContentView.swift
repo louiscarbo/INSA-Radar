@@ -91,6 +91,7 @@ struct ContentView: View {
                     } label: {
                         Label("Rafraîchir", systemImage: "arrow.clockwise")
                     }
+                    .disabled(buffering)
                 }
                 ToolbarItem {
                     Button {

@@ -239,11 +239,11 @@
 			};
 			buildConfigurationList = 7BB545652B64037000BDA5EC /* Build configuration list for PBXProject "INSA Radar" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = fr;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				fr,
 			);
 			mainGroup = 7BB545612B64037000BDA5EC;
 			packageReferences = (
