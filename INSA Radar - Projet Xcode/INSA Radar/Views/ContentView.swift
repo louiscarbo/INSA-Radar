@@ -24,6 +24,7 @@ struct ContentView: View {
     
     @State private var date: Date = Date()
     @State private var showInformations = false
+    @State private var showSalleSheet = false
     
     @State private var buffering = false
     
@@ -41,6 +42,7 @@ struct ContentView: View {
         4: true
     ]
 
+    // MARK: View
     var body: some View {
         NavigationStack {
             List {
@@ -83,6 +85,8 @@ struct ContentView: View {
                     }
                 }
             }
+            
+            // MARK: Toolbar
             .toolbarRole(.editor)
             .toolbar {
                 ToolbarItem {
@@ -174,49 +178,75 @@ struct ToggleEtage: View {
     }
 }
 
+// MARK: Available Salles
 struct AvailableSalleView: View {
     @Binding var date: Date
     @State var salle: Salle
     
+    @State private var displayText = ""
+    @State private var showSalleSheet = false
+    
     var body: some View {
-        if let nextUnavailableTime: Date = salle.nextUnavailableTime(after: date) {
-            if isSameDay(date1: date, date2: nextUnavailableTime) {
-                let nextUnavailableDateString = nextUnavailableTime.formatted(date: .omitted, time: .shortened)
-                Text(salle.nom + " - Disponible jusqu'à " + nextUnavailableDateString)
-            } else {
-                Text(salle.nom + " - Disponible toute la journée")
+        
+        Text(displayText)
+            .sheet(isPresented: $showSalleSheet) {
+                SalleView(salle: salle.nom)
             }
-        } else {
-            Text(salle.nom + " - Disponible")
-        }
+            .onTapGesture(count: 1, perform: {
+                showSalleSheet.toggle()
+            })
+            .onAppear {
+                displayText = getAvailableSalleText(salle: salle, date: date)
+            }
     }
 }
 
+private func getAvailableSalleText(salle: Salle, date: Date) -> String {
+    guard let nextUnavailableTime = salle.nextAvailableTime(after: date) else {
+        return salle.nom + " - Disponible"
+    }
+    
+    if isSameDay(date1: date, date2: nextUnavailableTime) {
+        let nextUnavailableDateString = nextUnavailableTime.formatted(date: .omitted, time: .shortened)
+        return salle.nom + " - Disponible jusqu'à " + nextUnavailableDateString
+    } else {
+        return salle.nom + " - Disponible toute la journée"
+    }
+}
+
+// MARK: Unavailable Salles
 struct UnavailableSalleView: View {
     @Binding var date: Date
     @State var salle: Salle
     
+    @State private var displayText = ""
+    @State private var showSalleSheet = false
+    
     var body: some View {
-        if let nextAvailableDate: Date = salle.nextAvailableTime(after: date) {
-            if isSameDay(date1: date, date2: nextAvailableDate) {
-                let nextAvailableDateString = nextAvailableDate.formatted(date: .omitted, time: .shortened)
-                Text(salle.nom + " - Indisponible jusqu'à " + nextAvailableDateString)
-            } else {
-                Text(salle.nom + " - Indisponible toute la journée")
+        Text(displayText)
+            .sheet(isPresented: $showSalleSheet) {
+                SalleView(salle: salle.nom)
             }
-        } else {
-            Text(salle.nom + " - Indisponible")
-        }
+            .onTapGesture(count: 1, perform: {
+                showSalleSheet.toggle()
+            })
+            .onAppear {
+                displayText = getUnavailableSalleText(salle: salle, date: date)
+            }
     }
 }
 
-func isSameDay(date1: Date, date2: Date) -> Bool {
-    let calendar = Calendar.current
-    let components1 = calendar.dateComponents([.month, .day], from: date1)
-    let components2 = calendar.dateComponents([.month, .day], from: date2)
-
-    return components1.month == components2.month &&
-           components1.day == components2.day
+private func getUnavailableSalleText(salle: Salle, date: Date) -> String {
+    guard let nextAvailableTime = salle.nextAvailableTime(after: date) else {
+        return salle.nom + " - Indisponible"
+    }
+    
+    if isSameDay(date1: date, date2: nextAvailableTime) {
+        let nextAvailableDateString = nextAvailableTime.formatted(date: .omitted, time: .shortened)
+        return salle.nom + " - Indisponible jusqu'à " + nextAvailableDateString
+    } else {
+        return salle.nom + " - Indisponible toute la journée"
+    }
 }
 
 #Preview {
